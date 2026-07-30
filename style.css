@@ -1,0 +1,150 @@
+:root {
+    --bg: #000;
+    --display-color: #fff;
+    --op-color: #999;
+    --num-bg: #333333;
+    --num-bg-hover: #4d4d4d;
+    --fn-bg: #a5a5a5;
+    --fn-bg-hover: #d9d9d9;
+    --fn-color: #000;
+    --accent: #ff9500;
+    --accent-hover: #ffb143;
+    --accent-active: #fff;
+  }
+ 
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+ 
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+  }
+ 
+  .phone {
+    width: 375px;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 812px;
+    min-width: 0;
+    background: var(--bg);
+    border-radius: 40px;
+    box-shadow: 0 0 0 10px #0a0a0a, 0 20px 60px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px 12px 30px;
+    overflow: hidden;
+  }
+ 
+  .display-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 14px 10px;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+ 
+  .expression {
+    color: var(--op-color);
+    font-size: 19px;
+    font-weight: 300;
+    min-height: 30px;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: right;
+    letter-spacing: 0.5px;
+    scrollbar-width: none;
+  }
+  .expression::-webkit-scrollbar { display: none; }
+ 
+  .result {
+    color: var(--display-color);
+    font-size: 62px;
+    font-weight: 300;
+    line-height: 1;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+  }
+ 
+  .keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+ 
+  button {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    font-size: 32px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--num-bg);
+    color: #fff;
+    transition: filter 0.1s ease, background 0.1s ease;
+    user-select: none;
+  }
+ 
+  button:active {
+    filter: brightness(1.3);
+  }
+ 
+  .num {
+    background: var(--num-bg);
+    color: #fff;
+  }
+  .num:hover { background: var(--num-bg-hover); }
+ 
+  .fn {
+    background: var(--fn-bg);
+    color: var(--fn-color);
+    font-size: 28px;
+  }
+  .fn:hover { background: var(--fn-bg-hover); }
+ 
+  .op {
+    background: var(--accent);
+    color: #fff;
+    font-size: 38px;
+    font-weight: 400;
+  }
+  .op:hover { background: var(--accent-hover); }
+ 
+  .op.active {
+    background: #fff;
+    color: var(--accent);
+  }
+ 
+  #backspaceBtn {
+    font-size: 24px;
+  }
+ 
+  @media (max-width: 400px) {
+    .result { font-size: 50px; }
+    button { font-size: 26px; }
+    .op { font-size: 32px; }
+  }
