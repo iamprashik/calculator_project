@@ -1,4 +1,4 @@
- const resultEl = document.getElementById('result');
+const resultEl = document.getElementById('result');
   const expressionEl = document.getElementById('expression');
   const clearBtn = document.getElementById('clearBtn');
   const allOpButtons = document.querySelectorAll('.op[data-action]');
@@ -158,18 +158,36 @@
     updateDisplay();
   }
  
+  function evaluateWithPrecedence(fullParts) {
+    // Pass 1: resolve all × and ÷ first, collapsing them into their neighbors
+    let terms = [parseFloat(fullParts[0])];
+    let ops = [];
+    for (let i = 1; i < fullParts.length; i += 2) {
+      const op = fullParts[i];
+      const val = parseFloat(fullParts[i + 1]);
+      if (op === 'multiply' || op === 'divide') {
+        const last = terms.pop();
+        terms.push(compute(String(last), String(val), op));
+      } else {
+        terms.push(val);
+        ops.push(op);
+      }
+    }
+    // Pass 2: resolve remaining + and − left to right
+    let acc = terms[0];
+    for (let i = 0; i < ops.length; i++) {
+      acc = compute(String(acc), String(terms[i + 1]), ops[i]);
+    }
+    return acc;
+  }
+ 
   function handleEquals() {
     if (expressionParts.length === 0 || current === 'Error') return;
     clearActiveOps();
     autoMultiplyPending = false;
     const fullParts = expressionParts.concat([current]);
-    let acc = parseFloat(fullParts[0]);
-    let errored = false;
-    for (let i = 1; i < fullParts.length; i += 2) {
-      const res = compute(String(acc), fullParts[i + 1], fullParts[i]);
-      if (isNaN(res) || !isFinite(res)) { errored = true; break; }
-      acc = res;
-    }
+    const acc = evaluateWithPrecedence(fullParts);
+    const errored = isNaN(acc) || !isFinite(acc);
     expressionText = fullParts
       .map((tok, idx) => (idx % 2 === 0 ? formatOperand(tok) : opSymbol(tok)))
       .join(' ');
