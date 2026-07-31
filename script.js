@@ -250,6 +250,15 @@ const resultEl = document.getElementById('result');
     }
   }
  
+  document.querySelectorAll('.keys button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.remove('pressed');
+      void btn.offsetWidth; // force reflow so the animation can restart on rapid taps
+      btn.classList.add('pressed');
+    });
+    btn.addEventListener('animationend', () => btn.classList.remove('pressed'));
+  });
+ 
   document.querySelectorAll('[data-num]').forEach(btn => {
     btn.addEventListener('click', () => inputNumber(btn.dataset.num));
   });
