@@ -1,10 +1,10 @@
-const resultEl = document.getElementById('result');
+ const resultEl = document.getElementById('result');
   const expressionEl = document.getElementById('expression');
   const clearBtn = document.getElementById('clearBtn');
   const allOpButtons = document.querySelectorAll('.op[data-action]');
  
   let current = '0';
-  let expressionParts = [];
+  let expressionParts = []; // alternating: [num, op, num, op, ...]
   let overwrite = true;
   let expressionText = '';
   let resultShown = false;
@@ -64,7 +64,10 @@ const resultEl = document.getElementById('result');
   function highlightOp(action) {
     clearActiveOps();
     const btn = document.querySelector(`.op[data-action="${action}"]`);
-    if (btn) btn.classList.add('active');
+    if (btn) {
+      btn.classList.add('active');
+      setTimeout(() => btn.classList.remove('active'), 150);
+    }
   }
  
   function inputNumber(num) {
